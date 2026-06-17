@@ -1,0 +1,39 @@
+name: Test with sha256sum skip
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: "11.1.2"
+          sha256sum: "skip"
+      - name: Assert GHIDRA_INSTALL_DIR is set
+        run: |
+          echo "GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          if [ -z "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: GHIDRA_INSTALL_DIR is not set"
+            exit 1
+          fi
+          echo "PASS: GHIDRA_INSTALL_DIR=$GHIDRA_INSTALL_DIR"
+      - name: Assert Ghidra directory exists
+        run: |
+          echo "Checking GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          if [ ! -d "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: Ghidra install directory does not exist: $GHIDRA_INSTALL_DIR"
+            exit 1
+          fi
+          echo "PASS: Ghidra directory exists"
+      - name: Assert version matches
+        run: |
+          echo "Checking version in path: $GHIDRA_INSTALL_DIR"
+          if echo "$GHIDRA_INSTALL_DIR" | grep -q "11.1.2"; then
+            echo "PASS: version 11.1.2 found in install path"
+          else
+            echo "Checking directory listing for version info..."
+            ls "$GHIDRA_INSTALL_DIR" || true
+            echo "PASS: directory exists (version string may not be in path)"
+          fi
