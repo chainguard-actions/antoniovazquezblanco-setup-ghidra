@@ -9,6 +9,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
 | v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.0) | [`7ecc487`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ecc487256e670bdfdfb049451b5090e58466a46) |
+| v2.1.3 | [`v2.1.3`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.3) | [`7ebdbd4`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ebdbd45725a4be0243293dcb906579c61ab89d8) |
 
 ## Privacy
 
