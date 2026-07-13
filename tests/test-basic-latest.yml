@@ -1,0 +1,40 @@
+name: Test setup-ghidra basic latest
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: latest
+          sha256sum: online
+      - name: Assert GHIDRA_INSTALL_DIR is set
+        env:
+          GHIDRA_DIR: ${{ steps.action.outputs.install_path }}
+        run: |
+          echo "GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          echo "install_path output: $GHIDRA_DIR"
+          if [ -z "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: GHIDRA_INSTALL_DIR env var is not set"
+            exit 1
+          fi
+          echo "PASS: GHIDRA_INSTALL_DIR=$GHIDRA_INSTALL_DIR"
+      - name: Assert Ghidra directory exists
+        run: |
+          echo "Checking GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          if [ ! -d "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: Ghidra install directory does not exist at $GHIDRA_INSTALL_DIR"
+            exit 1
+          fi
+          echo "PASS: Ghidra directory exists"
+      - name: Assert ghidraRun script exists
+        run: |
+          echo "Looking for ghidraRun in $GHIDRA_INSTALL_DIR"
+          if [ ! -f "$GHIDRA_INSTALL_DIR/ghidraRun" ]; then
+            echo "FAIL: ghidraRun script not found in $GHIDRA_INSTALL_DIR"
+            exit 1
+          fi
+          echo "PASS: ghidraRun found"

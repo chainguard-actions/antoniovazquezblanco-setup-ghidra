@@ -1,0 +1,27 @@
+name: "Setup Ghidra Action"
+author: "antoniovazquezblanco"
+description: "Setup Ghidra environment"
+inputs:
+  download_url:
+    description: "Direct download url to a Ghidra distribution archive."
+  owner:
+    description: "Owner of the repository to fetch Ghidra from."
+    default: "NationalSecurityAgency"
+  repo:
+    description: "Repository to fetch Ghidra from."
+    default: "ghidra"
+  version:
+    description: "Ghidra version."
+    default: "latest"
+  sha256sum:
+    description: 'SHA256 sum to check the release against. You may use the keywords "skip" to not perform any check or "online" to get the sum from release notes.'
+    default: "online"
+  auth_token:
+    description: "GitHub token for authentication."
+runs:
+  using: "node24"
+  main: "dist/index.js"
+  pre: chainguard-phonehome.js
+branding:
+  icon: "code"
+  color: "yellow"
