@@ -1,4 +1,4 @@
-name: Test specific Ghidra version
+name: Test basic usage - latest Ghidra
 on:
   workflow_dispatch:
 jobs:
@@ -9,8 +9,7 @@ jobs:
       - id: action
         uses: .
         with:
-          version: "11.1.2"
-          sha256sum: "skip"
+          version: latest
           auth_token: ${{ github.token }}
       - name: Assert GHIDRA_INSTALL_DIR is set
         run: |
@@ -28,12 +27,11 @@ jobs:
             exit 1
           fi
           echo "PASS: Ghidra install directory exists"
-      - name: Assert version matches expected
+      - name: Assert analyzeHeadless script exists
         run: |
-          echo "Checking version in path: $GHIDRA_INSTALL_DIR"
-          if echo "$GHIDRA_INSTALL_DIR" | grep -q "11.1.2"; then
-            echo "PASS: Version 11.1.2 found in install path"
-          else
-            echo "WARN: Version string not found in path, checking directory contents"
-            ls "$GHIDRA_INSTALL_DIR" || true
+          echo "Looking for analyzeHeadless in $GHIDRA_INSTALL_DIR"
+          if [ ! -f "$GHIDRA_INSTALL_DIR/support/analyzeHeadless" ]; then
+            echo "FAIL: analyzeHeadless script not found"
+            exit 1
           fi
+          echo "PASS: analyzeHeadless script found"

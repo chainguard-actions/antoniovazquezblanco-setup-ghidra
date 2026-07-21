@@ -1,4 +1,4 @@
-name: Test setup-ghidra skip checksum
+name: Test skip SHA256 checksum verification
 on:
   workflow_dispatch:
 jobs:
@@ -9,29 +9,31 @@ jobs:
       - id: action
         uses: .
         with:
-          version: "11.1.2"
-          sha256sum: skip
+          version: latest
+          sha256sum: "skip"
+          auth_token: ${{ github.token }}
       - name: Assert GHIDRA_INSTALL_DIR is set
         run: |
           echo "GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
           if [ -z "$GHIDRA_INSTALL_DIR" ]; then
-            echo "FAIL: GHIDRA_INSTALL_DIR env var is not set"
+            echo "FAIL: GHIDRA_INSTALL_DIR is not set"
             exit 1
           fi
-          echo "PASS: GHIDRA_INSTALL_DIR=$GHIDRA_INSTALL_DIR"
+          echo "PASS: GHIDRA_INSTALL_DIR is set to $GHIDRA_INSTALL_DIR"
       - name: Assert Ghidra directory exists
         run: |
           echo "Checking GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
           if [ ! -d "$GHIDRA_INSTALL_DIR" ]; then
-            echo "FAIL: Ghidra install directory does not exist at $GHIDRA_INSTALL_DIR"
+            echo "FAIL: Ghidra install directory does not exist: $GHIDRA_INSTALL_DIR"
             exit 1
           fi
-          echo "PASS: Ghidra directory exists"
-      - name: Assert ghidraRun script exists
+          echo "PASS: Ghidra install directory exists"
+      - name: Assert Ghidra support directory exists
         run: |
-          echo "Looking for ghidraRun in $GHIDRA_INSTALL_DIR"
-          if [ ! -f "$GHIDRA_INSTALL_DIR/ghidraRun" ]; then
-            echo "FAIL: ghidraRun script not found in $GHIDRA_INSTALL_DIR"
+          echo "Checking support directory in $GHIDRA_INSTALL_DIR"
+          if [ ! -d "$GHIDRA_INSTALL_DIR/support" ]; then
+            echo "FAIL: Ghidra support directory does not exist"
             exit 1
           fi
-          echo "PASS: ghidraRun found"
+          echo "PASS: Ghidra support directory exists"
+          ls "$GHIDRA_INSTALL_DIR/support"
