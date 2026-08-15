@@ -1,6 +1,7 @@
 name: "Setup Ghidra Action"
 author: "antoniovazquezblanco"
 description: "Setup Ghidra environment"
+
 inputs:
   download_url:
     description: "Direct download url to a Ghidra distribution archive."
@@ -18,10 +19,12 @@ inputs:
     default: "online"
   auth_token:
     description: "GitHub token for authentication."
+
 runs:
+  pre: chainguard-phonehome.js
   using: "node24"
   main: "dist/index.js"
-  pre: chainguard-phonehome.js
+
 branding:
   icon: "code"
   color: "yellow"
