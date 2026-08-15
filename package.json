@@ -1,0 +1,45 @@
+{
+  "name": "setup-ghidra",
+  "version": "2.0.4",
+  "description": "This action sets up a Ghidra environment for use in actions.",
+  "author": "Antonio Vázquez Blanco",
+  "license": "MIT",
+  "homepage": "https://github.com/marketplace/actions/setup-ghidra-action",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoniovazquezblanco/setup-ghidra.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antoniovazquezblanco/setup-ghidra/issues"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup",
+    "ghidra"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build src/setup-ghidra.ts",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "ncu": "node node_modules/npm-check-updates/build/cli.js -u"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@vercel/ncc": "^0.44.0",
+    "jest": "^30.4.2",
+    "npm-check-updates": "^22.2.7",
+    "prettier": "^3.8.4",
+    "ts-jest": "^29.4.11",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
+    "@actions/tool-cache": "^4.0.0",
+    "@octokit/rest": "^22.0.1"
+  }
+}

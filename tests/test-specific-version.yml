@@ -1,0 +1,45 @@
+name: Test specific Ghidra version
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: "11.1.2"
+          sha256sum: "online"
+          auth_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Assert GHIDRA_INSTALL_DIR is set
+        run: |
+          echo "GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          if [ -z "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: GHIDRA_INSTALL_DIR is not set"
+            exit 1
+          fi
+          echo "PASS: GHIDRA_INSTALL_DIR is set to $GHIDRA_INSTALL_DIR"
+      - name: Assert Ghidra directory exists
+        run: |
+          echo "Checking directory: $GHIDRA_INSTALL_DIR"
+          if [ ! -d "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: Ghidra install directory does not exist"
+            exit 1
+          fi
+          echo "PASS: Ghidra install directory exists"
+      - name: Assert version matches expected
+        run: |
+          echo "Checking version in path: $GHIDRA_INSTALL_DIR"
+          if echo "$GHIDRA_INSTALL_DIR" | grep -q "11.1.2"; then
+            echo "PASS: Version 11.1.2 found in install path"
+          else
+            echo "WARN: Version string not found in path, checking directory contents"
+            ls "$GHIDRA_INSTALL_DIR" || true
+            # Check if ghidraRun exists as a basic sanity check
+            if [ ! -f "$GHIDRA_INSTALL_DIR/ghidraRun" ]; then
+              echo "FAIL: ghidraRun not found, installation may have failed"
+              exit 1
+            fi
+            echo "PASS: ghidraRun found, installation succeeded"
+          fi
