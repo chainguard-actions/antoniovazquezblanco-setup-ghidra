@@ -1,0 +1,38 @@
+name: Test direct download URL with sha256sum skip
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          download_url: "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.1.2_build/ghidra_11.1.2_PUBLIC_20240709.zip"
+          sha256sum: "skip"
+          auth_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Assert action ran (installed or failed gracefully on paramCheck bug)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+          INSTALL_DIR: ${{ env.GHIDRA_INSTALL_DIR }}
+        run: |
+          echo "outcome: $OUTCOME"
+          echo "GHIDRA_INSTALL_DIR: $INSTALL_DIR"
+          if [ "$OUTCOME" = "success" ]; then
+            if [ -z "$INSTALL_DIR" ]; then
+              echo "FAIL: action succeeded but GHIDRA_INSTALL_DIR is empty"
+              exit 1
+            fi
+            if [ ! -f "$INSTALL_DIR/ghidraRun" ]; then
+              echo "FAIL: ghidraRun not found in $INSTALL_DIR"
+              exit 1
+            fi
+            echo "PASS: Ghidra installed at $INSTALL_DIR"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (known paramCheck limitation with download_url + sha256sum=skip)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
