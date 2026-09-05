@@ -1,0 +1,43 @@
+name: Test download_url input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          download_url: "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.1.2_build/ghidra_11.1.2_PUBLIC_20240709.zip"
+          sha256sum: "skip"
+      - name: Assert Ghidra path output is set
+        env:
+          INSTALL_PATH: ${{ steps.action.outputs.install_path }}
+        run: |
+          echo "install_path: $INSTALL_PATH"
+          if [ -z "$INSTALL_PATH" ]; then
+            echo "FAIL: install_path output is empty"
+            exit 1
+          fi
+          echo "PASS: install_path is set to '$INSTALL_PATH'"
+      - name: Assert Ghidra directory exists
+        env:
+          INSTALL_PATH: ${{ steps.action.outputs.install_path }}
+        run: |
+          echo "Checking directory: $INSTALL_PATH"
+          if [ ! -d "$INSTALL_PATH" ]; then
+            echo "FAIL: Ghidra install directory does not exist at '$INSTALL_PATH'"
+            exit 1
+          fi
+          echo "PASS: Ghidra directory exists"
+      - name: Assert ghidraRun script is present
+        env:
+          INSTALL_PATH: ${{ steps.action.outputs.install_path }}
+        run: |
+          echo "Checking for ghidraRun in: $INSTALL_PATH"
+          if [ ! -f "$INSTALL_PATH/ghidraRun" ]; then
+            echo "FAIL: ghidraRun not found in '$INSTALL_PATH'"
+            exit 1
+          fi
+          echo "PASS: ghidraRun found"

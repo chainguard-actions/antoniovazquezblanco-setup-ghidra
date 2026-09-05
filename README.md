@@ -1,18 +1,89 @@
-# antoniovazquezblanco/setup-ghidra
+# Setup Ghidra Action
 
-Setup Ghidra environment
+[![CI](https://github.com/antoniovazquezblanco/setup-ghidra/actions/workflows/main.yml/badge.svg)](https://github.com/antoniovazquezblanco/setup-ghidra/actions/workflows/main.yml)
+[![CodeQL](https://github.com/antoniovazquezblanco/setup-ghidra/actions/workflows/codeql.yml/badge.svg)](https://github.com/antoniovazquezblanco/setup-ghidra/actions/workflows/codeql.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/antoniovazquezblanco/setup-ghidra/badge)](https://scorecard.dev/viewer/?uri=github.com/antoniovazquezblanco/setup-ghidra)
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/antoniovazquezblanco/setup-ghidra](https://github.com/antoniovazquezblanco/setup-ghidra).
+This action sets up a Ghidra environment for use in actions.
+Specific Ghidra versions can be selected and even releases from custom forks can be used.
 
-## Versions
+This action will automatically set the `GHIDRA_INSTALL_PATH` variable in your environment.
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.0) | [`7ecc487`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ecc487256e670bdfdfb049451b5090e58466a46) |
-| v2.1.2 | [`v2.1.2`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.2) | [`a66cf5e`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/a66cf5e467f765e2282280761fed8e2a5936264c) |
-| v2.1.3 | [`v2.1.3`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.3) | [`7ebdbd4`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ebdbd45725a4be0243293dcb906579c61ab89d8) |
-| v2.1.4 | [`v2.1.4`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.4) | [`f505d78`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/f505d78e25aa700bf5336b0daac3aa9bea5f0594) |
-| v2.1.5 | [`v2.1.5`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.5) | [`75c7686`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/75c7686eb0b3e48eb7880941b6cac63e5fca8432) |
+The action will fail if no matching versions are found.
+
+## Usage
+
+**Basic:**
+
+This example just clones your code, setups java and setups Ghidra from the oficial repo to the latest release found.
+
+```yaml
+steps:
+  - uses: actions/checkout@v4
+  - uses: actions/setup-java@v4
+  - uses: antoniovazquezblanco/setup-ghidra@v2
+```
+
+**Advanced:**
+
+This example tries to build a module project using different Ghidra versions.
+
+```yaml
+strategy:
+  matrix:
+    ghidra:
+      - "11.3.2"
+      - "11.2.1"
+      - "11.1.2"
+
+steps:
+  - uses: actions/checkout@v4
+  - uses: actions/setup-java@v4
+  - uses: gradle/actions/setup-gradle@v3
+  - uses: antoniovazquezblanco/setup-ghidra@v2
+    with:
+      auth_token: ${{ secrets.GITHUB_TOKEN }}
+      version: ${{ matrix.ghidra }}
+  - name: Build something with Ghidra ${{ matrix.ghidra }}
+    run: gradle -PGHIDRA_INSTALL_DIR=${{ env.GHIDRA_INSTALL_DIR }}
+```
+
+**Reference:**
+
+For a full reference of action parameters see [action.yml](action.yml)
+
+```yaml
+- uses: antoniovazquezblanco/setup-ghidra@v2
+  with:
+    # A distribution download URL to directly download and install it.
+    # If this argument is specified, both the repository and version arguments
+    # will be ignored.
+    # Example:
+    # download_url: 'https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/ghidra_10.4_PUBLIC_20230928.zip'
+    download_url: ""
+
+    # The owner of the repository to look for Ghidra releases. By default, NSA
+    # official user is used.
+    owner: "NationalSecurityAgency"
+
+    # A repository on which to find releases. By default, NSA official repo
+    # name is used.
+    repository: "ghidra"
+
+    # Version spec to use. Please use SemVer notation. It also accepts the
+    # 'latest' alias to download the latest version available.
+    version: "latest"
+
+    # SHA256 sum value to check the downloaded tool against. You may use the
+    # keyworkd 'skip' to not perform this check or the keyworkd 'online' to
+    # check against the release notes in the repository. Otherwise, a valid
+    # hexadecimal string is expected.
+    sha256sum: "online"
+
+    # Github authentication token to avoid API limiting.
+    # This is optional.
+    auth_token: ${{ secrets.GITHUB_TOKEN }}
+```
 
 ## Privacy
 
