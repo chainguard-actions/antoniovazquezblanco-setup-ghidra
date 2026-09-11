@@ -1,0 +1,39 @@
+name: Test specific Ghidra version
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: "11.1.2"
+          sha256sum: "skip"
+          auth_token: ${{ github.token }}
+      - name: Assert version output matches requested version
+        env:
+          VERSION: ${{ steps.action.outputs.version }}
+        run: |
+          echo "version: $VERSION"
+          if [ -z "$VERSION" ]; then
+            echo "FAIL: expected version output to be non-empty"
+            exit 1
+          fi
+          if [ "$VERSION" != "11.1.2" ]; then
+            echo "FAIL: expected version '11.1.2' but got '$VERSION'"
+            exit 1
+          fi
+          echo "PASS: got expected version '$VERSION'"
+      - name: Assert Ghidra installation exists
+        run: |
+          FOUND=$(find /opt /home /usr/local /tmp -name "ghidraRun" 2>/dev/null | head -1)
+          if [ -n "$FOUND" ]; then
+            echo "PASS: ghidraRun found at $FOUND"
+          elif command -v ghidraRun > /dev/null 2>&1; then
+            echo "PASS: ghidraRun found in PATH"
+          else
+            echo "FAIL: ghidraRun not found - Ghidra installation may have failed"
+            exit 1
+          fi

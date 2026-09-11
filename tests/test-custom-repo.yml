@@ -1,0 +1,30 @@
+name: Test custom owner and repo inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          owner: "NationalSecurityAgency"
+          repo: "ghidra"
+          version: "11.1.2"
+          sha256sum: "skip"
+          auth_token: ${{ github.token }}
+      - name: Assert version output is set and correct
+        env:
+          VERSION: ${{ steps.action.outputs.version }}
+        run: |
+          echo "version: $VERSION"
+          if [ -z "$VERSION" ]; then
+            echo "FAIL: expected version output to be non-empty"
+            exit 1
+          fi
+          if [ "$VERSION" != "11.1.2" ]; then
+            echo "FAIL: expected version '11.1.2' but got '$VERSION'"
+            exit 1
+          fi
+          echo "PASS: got expected version '$VERSION' from custom owner/repo"

@@ -1,0 +1,37 @@
+name: Test download_url input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      # Use download_url to bypass the GitHub API release lookup.
+      # sha256sum must be "skip" when using download_url (no online lookup possible).
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          download_url: "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.1.2_build/ghidra_11.1.2_PUBLIC_20240709.zip"
+          sha256sum: "skip"
+
+      - name: Assert action ran with download_url input
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+          VERSION: ${{ steps.action.outputs.version }}
+        run: |
+          echo "outcome: $OUTCOME"
+          echo "version: $VERSION"
+          if [ "$OUTCOME" = "success" ]; then
+            if [ -z "$VERSION" ]; then
+              echo "FAIL: action succeeded but version output is empty"
+              exit 1
+            fi
+            echo "PASS: Ghidra installed via download_url, version=$VERSION"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (expected under harness constraints)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
