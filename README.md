@@ -14,6 +14,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v2.1.4 | [`v2.1.4`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.4) | [`f505d78`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/f505d78e25aa700bf5336b0daac3aa9bea5f0594) |
 | v2.1.5 | [`v2.1.5`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.5) | [`75c7686`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/75c7686eb0b3e48eb7880941b6cac63e5fca8432) |
 | v2.1.6 | [`v2.1.6`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.6) | [`64b494c`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/64b494cd0f93a746af9ac2574c97241ed3a562cb) |
+| v2.2.0 | [`v2.2.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.2.0) | [`9567d7c`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/9567d7c61e868ac2ef362dccee5b5865f874a6a1) |
 
 ## Privacy
 
