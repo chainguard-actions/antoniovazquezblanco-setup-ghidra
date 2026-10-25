@@ -1,0 +1,35 @@
+name: Test specific Ghidra version install
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: "11.0.3"
+          sha256sum: online
+          auth_token: ${{ github.token }}
+      - name: Assert outputs and environment
+        env:
+          VERSION: ${{ steps.action.outputs.version }}
+          JAVA_VERSION: ${{ steps.action.outputs.java_version }}
+        run: |
+          echo "version: $VERSION"
+          echo "java_version: $JAVA_VERSION"
+          echo "GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          if [ "$VERSION" != "11.0.3" ]; then
+            echo "FAIL: expected version '11.0.3'"
+            exit 1
+          fi
+          if ! echo "$JAVA_VERSION" | grep -qE '^[0-9]+$' || [ "$JAVA_VERSION" -lt 17 ]; then
+            echo "FAIL: expected numeric java_version >= 17"
+            exit 1
+          fi
+          if [ ! -x "$GHIDRA_INSTALL_DIR/ghidraRun" ] && [ ! -f "$GHIDRA_INSTALL_DIR/ghidraRun" ]; then
+            echo "FAIL: ghidraRun not found in GHIDRA_INSTALL_DIR"
+            exit 1
+          fi
+          echo "PASS"

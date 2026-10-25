@@ -1,0 +1,41 @@
+name: Test latest Ghidra install
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          auth_token: ${{ github.token }}
+      - name: Assert outputs and environment
+        env:
+          VERSION: ${{ steps.action.outputs.version }}
+          JAVA_VERSION: ${{ steps.action.outputs.java_version }}
+        run: |
+          echo "version: $VERSION"
+          echo "java_version: $JAVA_VERSION"
+          echo "GHIDRA_INSTALL_DIR: $GHIDRA_INSTALL_DIR"
+          if ! echo "$VERSION" | grep -qE '^[0-9]+(\.[0-9]+)+'; then
+            echo "FAIL: version output is not a version number"
+            exit 1
+          fi
+          if ! echo "$JAVA_VERSION" | grep -qE '^[0-9]+$'; then
+            echo "FAIL: java_version output is not a number"
+            exit 1
+          fi
+          if [ -z "$GHIDRA_INSTALL_DIR" ] || [ ! -d "$GHIDRA_INSTALL_DIR" ]; then
+            echo "FAIL: GHIDRA_INSTALL_DIR not set or not a directory"
+            exit 1
+          fi
+          if [ ! -f "$GHIDRA_INSTALL_DIR/Ghidra/application.properties" ]; then
+            echo "FAIL: application.properties missing from install dir"
+            exit 1
+          fi
+          if ! grep -q "application.version=$VERSION" "$GHIDRA_INSTALL_DIR/Ghidra/application.properties"; then
+            echo "FAIL: version output does not match application.properties"
+            exit 1
+          fi
+          echo "PASS"
