@@ -6,17 +6,17 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.0) | [`7ecc487`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ecc487256e670bdfdfb049451b5090e58466a46) |
-| v2.1.2 | [`v2.1.2`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.2) | [`a66cf5e`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/a66cf5e467f765e2282280761fed8e2a5936264c) |
-| v2.1.3 | [`v2.1.3`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.3) | [`7ebdbd4`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ebdbd45725a4be0243293dcb906579c61ab89d8) |
-| v2.1.4 | [`v2.1.4`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.4) | [`f505d78`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/f505d78e25aa700bf5336b0daac3aa9bea5f0594) |
-| v2.1.5 | [`v2.1.5`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.5) | [`75c7686`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/75c7686eb0b3e48eb7880941b6cac63e5fca8432) |
-| v2.1.6 | [`v2.1.6`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.6) | [`64b494c`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/64b494cd0f93a746af9ac2574c97241ed3a562cb) |
-| v2.2.0 | [`v2.2.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.2.0) | [`9567d7c`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/9567d7c61e868ac2ef362dccee5b5865f874a6a1) |
-| v2.2.1 | [`v2.2.1`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.2.1) | [`2bb30c4`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/2bb30c438fe1e50617ff261ad6de159376970972) |
-| v2.3.0 | [`v2.3.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.3.0) | [`aeed43f`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/aeed43f96c28fb96da4b7411455b8748b4931797) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v2.1.0 | [`v2.1.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.0) | [`7ecc487`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ecc487256e670bdfdfb049451b5090e58466a46) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.1.0/HARDENING.md) |
+| v2.1.2 | [`v2.1.2`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.2) | [`a66cf5e`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/a66cf5e467f765e2282280761fed8e2a5936264c) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.1.2/HARDENING.md) |
+| v2.1.3 | [`v2.1.3`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.3) | [`7ebdbd4`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/7ebdbd45725a4be0243293dcb906579c61ab89d8) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.1.3/HARDENING.md) |
+| v2.1.4 | [`v2.1.4`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.4) | [`f505d78`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/f505d78e25aa700bf5336b0daac3aa9bea5f0594) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.1.4/HARDENING.md) |
+| v2.1.5 | [`v2.1.5`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.5) | [`75c7686`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/75c7686eb0b3e48eb7880941b6cac63e5fca8432) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.1.5/HARDENING.md) |
+| v2.1.6 | [`v2.1.6`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.1.6) | [`64b494c`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/64b494cd0f93a746af9ac2574c97241ed3a562cb) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.1.6/HARDENING.md) |
+| v2.2.0 | [`v2.2.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.2.0) | [`9567d7c`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/9567d7c61e868ac2ef362dccee5b5865f874a6a1) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.2.0/HARDENING.md) |
+| v2.2.1 | [`v2.2.1`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.2.1) | [`2bb30c4`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/2bb30c438fe1e50617ff261ad6de159376970972) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.2.1/HARDENING.md) |
+| v2.3.0 | [`v2.3.0`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/tree/v2.3.0) | [`aeed43f`](https://github.com/antoniovazquezblanco/setup-ghidra/commit/aeed43f96c28fb96da4b7411455b8748b4931797) | [`HARDENING.md`](https://github.com/chainguard-actions/antoniovazquezblanco-setup-ghidra/blob/v2.3.0/HARDENING.md) |
 
 ## Privacy
 
